@@ -1,12 +1,11 @@
 {
   "name": "@batleforc/dockerdevcli",
   "description": "CLI for Docker dev env",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "author": "Maxime@batleforc",
   "bin": {
     "dockerdevcli": "./bin/run"
   },
-  "publishConfig":{"registry": "https://npm.pkg.github.com/"},
   "bugs": "https://github.com/batleforc/dockerdevcli/issues",
   "dependencies": {
     "@oclif/command": "^1.8.0",

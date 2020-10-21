@@ -15,11 +15,11 @@ CLI for Docker dev env
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g dockerdevcli
+$ npm install -g @batleforc/dockerdevcli
 $ dockerdevcli COMMAND
 running command...
 $ dockerdevcli (-v|--version|version)
-dockerdevcli/0.0.1 linux-x64 node-v10.19.0
+@batleforc/dockerdevcli/0.0.4 linux-x64 node-v10.19.0
 $ dockerdevcli --help [COMMAND]
 USAGE
   $ dockerdevcli COMMAND
@@ -50,7 +50,7 @@ DESCRIPTION
   ...
 ```
 
-_See code: [src/commands/Init.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.1/src/commands/Init.js)_
+_See code: [src/commands/Init.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.4/src/commands/Init.js)_
 
 ## `dockerdevcli Portainer`
 
@@ -68,7 +68,7 @@ DESCRIPTION
   ...
 ```
 
-_See code: [src/commands/Portainer.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.1/src/commands/Portainer.js)_
+_See code: [src/commands/Portainer.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.4/src/commands/Portainer.js)_
 
 ## `dockerdevcli createandstart`
 
@@ -89,7 +89,7 @@ DESCRIPTION
   Create a container with the choosen image,name, port and working folder (Remember to pass the fullpath to the folder)
 ```
 
-_See code: [src/commands/createandstart.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.1/src/commands/createandstart.js)_
+_See code: [src/commands/createandstart.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.4/src/commands/createandstart.js)_
 
 ## `dockerdevcli glabrunner`
 
@@ -111,7 +111,7 @@ DESCRIPTION
   Extra documentation goes here
 ```
 
-_See code: [src/commands/glabrunner.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.1/src/commands/glabrunner.js)_
+_See code: [src/commands/glabrunner.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.4/src/commands/glabrunner.js)_
 
 ## `dockerdevcli help [COMMAND]`
 

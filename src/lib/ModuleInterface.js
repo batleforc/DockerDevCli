@@ -90,12 +90,17 @@ module.exports=class DevEnvDocker {
         var value = await this.FindIndexContainerByName(this.Traefikname)
         if(value!=-1) {console.log("Container already started");return;}
         if(!await this.ImageExist(this.Traefikimg)) await this.pull(this.Traefikimg);
-        console.log(`Creating Container ${this.Traefikname}`)
+        try{
+                    fs.readFileSync(__dirname+'/traefik.yml')
+        }catch{
+            exec('touch traefik.yml')
+            exec(` cat  ${__dirname}/traefik/traefik.yml >> traefik.yml`,(err)=>console.log(err))
+        }
         await this.docker.createContainer({
             Image:this.Traefikimg,
             name:this.Traefikname,
             HostConfig:{
-                Binds : [`${this.socketPath}:/var/run/docker.sock`,__dirname+'/traefik/traefik.yml:/etc/traefik/traefik.yml'],
+                Binds : [`${this.socketPath}:/var/run/docker.sock`,__dirname+'/traefik.yml:/etc/traefik/traefik.yml'],
                 PortBindings :{
                     '80/tcp' :[{
                         HostPort:'80'
@@ -201,8 +206,7 @@ module.exports=class DevEnvDocker {
             console.log("You need to try again with Sudo Right")
             console.log(error)
         }else{
-            exec(`curl -L ${this.DnsSuffix}:80`,(error2)=>{
-                if(error2) return console.log(error2)
+            exec(`curl -L ${this.DnsSuffix}:80`,()=>{
                 console.log("It works")
             })
         }
