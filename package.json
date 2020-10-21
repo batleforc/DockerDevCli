@@ -1,7 +1,7 @@
 {
   "name": "@batleforc/dockerdevcli",
   "description": "CLI for Docker dev env",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Maxime@batleforc",
   "bin": {
     "dockerdevcli": "./bin/run"

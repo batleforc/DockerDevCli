@@ -90,17 +90,18 @@ module.exports=class DevEnvDocker {
         var value = await this.FindIndexContainerByName(this.Traefikname)
         if(value!=-1) {console.log("Container already started");return;}
         if(!await this.ImageExist(this.Traefikimg)) await this.pull(this.Traefikimg);
-        try{
-                    fs.readFileSync(__dirname+'/traefik.yml')
-        }catch{
-            exec('touch traefik.yml')
-            exec(` cat  ${__dirname}/traefik/traefik.yml >> traefik.yml`,(err)=>console.log(err))
-        }
         await this.docker.createContainer({
             Image:this.Traefikimg,
             name:this.Traefikname,
+            'Env':[
+                "TRAEFIK_API_INSECURE=true",
+                "TRAEFIK_PROVIDERS_DOCKER_DEFAULTRULE=Host(`{{ trimPrefix `/` .Name }}.localhost`)",
+                "TRAEFIK_PING=TRUE",
+                "TRAEFIK_API=true",
+                "TRAEFIK_ACCESSLOG=true"
+            ],
             HostConfig:{
-                Binds : [`${this.socketPath}:/var/run/docker.sock`,__dirname+'/traefik.yml:/etc/traefik/traefik.yml'],
+                Binds : [`${this.socketPath}:/var/run/docker.sock`],
                 PortBindings :{
                     '80/tcp' :[{
                         HostPort:'80'
