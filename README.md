@@ -19,7 +19,7 @@ $ npm install -g dockerdevcli
 $ dockerdevcli COMMAND
 running command...
 $ dockerdevcli (-v|--version|version)
-dockerdevcli/0.0.1 win32-x64 node-v12.14.1
+dockerdevcli/0.0.1 linux-x64 node-v10.19.0
 $ dockerdevcli --help [COMMAND]
 USAGE
   $ dockerdevcli COMMAND
@@ -50,7 +50,7 @@ DESCRIPTION
   ...
 ```
 
-_See code: [src\commands\Init.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.1/src\commands\Init.js)_
+_See code: [src/commands/Init.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.1/src/commands/Init.js)_
 
 ## `dockerdevcli Portainer`
 
@@ -68,7 +68,7 @@ DESCRIPTION
   ...
 ```
 
-_See code: [src\commands\Portainer.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.1/src\commands\Portainer.js)_
+_See code: [src/commands/Portainer.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.1/src/commands/Portainer.js)_
 
 ## `dockerdevcli createandstart`
 
@@ -89,7 +89,7 @@ DESCRIPTION
   Create a container with the choosen image,name, port and working folder (Remember to pass the fullpath to the folder)
 ```
 
-_See code: [src\commands\createandstart.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.1/src\commands\createandstart.js)_
+_See code: [src/commands/createandstart.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.1/src/commands/createandstart.js)_
 
 ## `dockerdevcli glabrunner`
 
@@ -100,14 +100,18 @@ USAGE
   $ dockerdevcli glabrunner
 
 OPTIONS
-  -n, --name=name  name to print
+  -c, --ContainerName=ContainerName  name of the GitlabRunner
+  -d, --Stop                         Stop glabrunner
+  -f, --Folder=Folder                Folder to bind (Please remember to pass the fullpath)
+  -o, --Conf                         Configuration
+  -u, --Start                        Start glabrunner
 
 DESCRIPTION
   ...
   Extra documentation goes here
 ```
 
-_See code: [src\commands\glabrunner.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.1/src\commands\glabrunner.js)_
+_See code: [src/commands/glabrunner.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.1/src/commands/glabrunner.js)_
 
 ## `dockerdevcli help [COMMAND]`
 
@@ -124,5 +128,5 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src\commands\help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src/commands/help.ts)_
 <!-- commandsstop -->

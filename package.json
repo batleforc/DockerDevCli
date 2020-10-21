@@ -1,5 +1,5 @@
 {
-  "name": "dockerdevcli",
+  "name": "@batleforc/dockerdevcli",
   "description": "CLI for Docker dev env",
   "version": "0.0.1",
   "author": "Maxime@batleforc",
