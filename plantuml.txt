@@ -1,0 +1,28 @@
+@startuml
+node "Uttilisateur" as user
+node "Interface" as int
+
+cloud Docker{
+node "Traefik" as rp
+node "Portainer" as port
+cloud Projet{
+node "DockerPHP" as dckphp
+node "DockerWp" as dckwp
+node "DockerNodeJs" as dcknode
+}
+}
+
+user ==> int : Gere son environnement
+user ==> rp : Accéde aux site internet
+user ==> port : Gére son environnement docker
+rp ..> dckphp : Redirige le flux
+rp ..> dckwp
+rp ..> dcknode
+port --> Docker : accéde a docker
+
+
+int--> rp : Creer Traefik et Portainer
+int --> port
+int --> user : Dirige *.localhost vers Traefik
+int ..> Projet : Creer des stack serveur
+@enduml
