@@ -1,5 +1,5 @@
 {
-  "name": "@batleforc/dockerdevcli",
+  "name": "@nexiconseils/dockerdevcli",
   "description": "CLI for Docker dev env",
   "version": "0.0.6",
   "author": "Maxime@batleforc",
