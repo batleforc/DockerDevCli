@@ -1,6 +1,6 @@
 var Docker = require('dockerode');
 var os = require('os');
-const {exec} = require('child_process');
+const {exec,spawn} = require('child_process');
 var fs = require('fs')
 
 module.exports=class DevEnvDocker {
@@ -136,11 +136,8 @@ module.exports=class DevEnvDocker {
                 Image:this.PortainerImg,
                 name: this.PortainerName,
                 HostConfig: {
-                    Binds : [`${this.socketPath}:/var/run/docker.sock`],
+                    Binds : [`${this.socketPath}:/var/run/docker.sock`,'portainer_data:/data'],
                     PortBindings: {
-                        '8000/tcp': [{
-                            HostPort: '8000',
-                        }],
                         '9000/tcp': [{
                             HostPort: '9000',
                         }],
@@ -149,10 +146,11 @@ module.exports=class DevEnvDocker {
                         "Name":"always"
                     }
                 },
-                Volumes:{
-                    "portainer_data/data":{}
+                Labels:{
+                    "traefik.port":"9000",
+                    "traefik.http.services.portainer.loadbalancer.server.port":"9000"
                 },
-                ExposedPorts : {"9000/tcp":{},"8000/tcp":{}},
+                ExposedPorts : {"9000/tcp":{}},
         }).catch((err)=>{
             console.log("Error during the creation of the container")
             console.log("Error : "+err)
@@ -268,6 +266,10 @@ module.exports=class DevEnvDocker {
                 var swap = this.docker.getContainer(ID)
                 return swap
             })
+    }
+    Container(Name){
+        const shell = spawn(`docker`,['exec','-it',Name,'bash'] ,{stdio:'inherit'})
+        shell.on('close',(code)=>{console.log(`[${Name} Shell] terminated :${code}`)})
     }
     async RemovePortainer(){await this.RemoveContainer(this.PortainerName)}
     async RemoveTraefik(){await this.RemoveContainer(this.Traefikname)}

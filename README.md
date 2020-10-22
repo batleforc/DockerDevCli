@@ -15,11 +15,11 @@ CLI for Docker dev env
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g @batleforc/dockerdevcli
+$ npm install -g @nexiconseils/dockerdevcli
 $ dockerdevcli COMMAND
 running command...
 $ dockerdevcli (-v|--version|version)
-@batleforc/dockerdevcli/0.0.6 linux-x64 node-v10.19.0
+@nexiconseils/dockerdevcli/0.0.6 linux-x64 node-v10.19.0
 $ dockerdevcli --help [COMMAND]
 USAGE
   $ dockerdevcli COMMAND
@@ -28,11 +28,30 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`dockerdevcli Container`](#dockerdevcli-container)
 * [`dockerdevcli Init`](#dockerdevcli-init)
 * [`dockerdevcli Portainer`](#dockerdevcli-portainer)
 * [`dockerdevcli createandstart`](#dockerdevcli-createandstart)
 * [`dockerdevcli glabrunner`](#dockerdevcli-glabrunner)
 * [`dockerdevcli help [COMMAND]`](#dockerdevcli-help-command)
+
+## `dockerdevcli Container`
+
+Describe the command here
+
+```
+USAGE
+  $ dockerdevcli Container
+
+OPTIONS
+  -n, --name=name  name to print
+
+DESCRIPTION
+  ...
+  Extra documentation goes here
+```
+
+_See code: [src/commands/Container.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.6/src/commands/Container.js)_
 
 ## `dockerdevcli Init`
 
