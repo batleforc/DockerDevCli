@@ -30,6 +30,7 @@ USAGE
 <!-- commands -->
 * [`dockerdevcli Container`](#dockerdevcli-container)
 * [`dockerdevcli Init`](#dockerdevcli-init)
+* [`dockerdevcli PhpProject`](#dockerdevcli-phpproject)
 * [`dockerdevcli Portainer`](#dockerdevcli-portainer)
 * [`dockerdevcli createandstart`](#dockerdevcli-createandstart)
 * [`dockerdevcli glabrunner`](#dockerdevcli-glabrunner)
@@ -37,14 +38,14 @@ USAGE
 
 ## `dockerdevcli Container`
 
-Describe the command here
+Allow the user to interact with the container
 
 ```
 USAGE
   $ dockerdevcli Container
 
 OPTIONS
-  -n, --name=name  name to print
+  -n, --name=name  Name of the container
 
 DESCRIPTION
   ...
@@ -70,6 +71,24 @@ DESCRIPTION
 ```
 
 _See code: [src/commands/Init.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.6/src/commands/Init.js)_
+
+## `dockerdevcli PhpProject`
+
+Describe the command here
+
+```
+USAGE
+  $ dockerdevcli PhpProject
+
+OPTIONS
+  -n, --name=name  name to print
+
+DESCRIPTION
+  ...
+  Extra documentation goes here
+```
+
+_See code: [src/commands/PhpProject.js](https://github.com/batleforc/dockerdevcli/blob/v0.0.6/src/commands/PhpProject.js)_
 
 ## `dockerdevcli Portainer`
 

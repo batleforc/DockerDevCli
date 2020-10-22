@@ -17,7 +17,7 @@ class CreateandstartCommand extends Command {
       ExposedPort = {[flags.Port+"/tcp"]:{}};
     }
   var Dev= new DevEnvDocker('/var/run/docker.sock');
-    Dev.CreateAndStart(flags.ImageName,flags.ContainerName,ExposedPort,Port,folder)
+    Dev.CreateAndStart(flags.ImageName,flags.ContainerName,ExposedPort,Port,folder,flags.Port)
   }
 }
 

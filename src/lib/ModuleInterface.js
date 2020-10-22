@@ -58,7 +58,7 @@ module.exports=class DevEnvDocker {
         })
         return promise1;
     }
-    async CreateAndStart(ImageName,ContainerName,ExposePort,BindingPort,Folder,ImageTag="Latest"){
+    async CreateAndStart(ImageName,ContainerName,ExposePort,BindingPort,Folder,Port,ImageTag="Latest"){
         var value = await this.FindIndexContainerByName(ContainerName)
         if(value!=-1) {console.log("Container already started");return;}
         if(!await this.ImageExist(ImageName)||ImageTag!="Latest") await this.pull(ImageName,ImageTag);
@@ -74,7 +74,9 @@ module.exports=class DevEnvDocker {
                 RestartPolicy:{
                     "Name":"always"
                 }
-
+            },
+            Labels:{
+                [`traefik.http.services.${ContainerName}.loadbalancer.server.port`]: Port.toString()
             }
         }).catch((err)=>{
             console.log("Error during the creation of the container")
@@ -161,6 +163,10 @@ module.exports=class DevEnvDocker {
         }).catch((err)=>console.log("Error during the start of the container \nError:"+err))
         .then(()=>console.log(`Portainer is ready to rock \nPlease go to http://localhost:9000 or http://portainer.localhost if traefik is correctly configured\nPlease note that if it's the first time you may need to configure the container`))
     }
+    async StartPhp(Name,Folder,Port){
+        var projectfolder = Folder.includes('.')!=-1? Folder.replace('.',process.env.PWD):Folder;
+        await this.CreateAndStart("nexiconseils/php:7.4",Name,{},{},[`${projectfolder}:/app`],Port?Port:80)
+    }
     async LinkDns(){
         console.log(`Warning: If you are under wsl env please execute the LinkDns script as admin under cmd or powershell, Your Os is recognise as ${process.platform}.`);
         console.log(`Welcome ${os.userInfo().username}`)
@@ -211,14 +217,14 @@ module.exports=class DevEnvDocker {
         }
     }
     FindIndexContainerByName(Name){
-        return this.docker.listContainers()
+        return this.docker.listContainers({"all":true})
             .then((containers)=> containers.findIndex((element => element.Names[0]==`/${Name}`)))
     }
     GetContainerID(Name){
         return this.FindIndexContainerByName(Name)
             .then((Index)=>{
                 if(Index==-1) return -1;
-                return this.docker.listContainers()
+                return this.docker.listContainers({"all":true})
                     .then((Containers)=>Containers[Index].Id)
             })
     }
@@ -227,6 +233,7 @@ module.exports=class DevEnvDocker {
             .then((ID)=>{
                 if(ID==-1) return;
                 var swap=this.docker.getContainer(ID);
+                console.log('Container succesfuly stoped')
                 return swap.stop()
                 .then(()=>swap);
             })
@@ -240,6 +247,7 @@ module.exports=class DevEnvDocker {
                 //swap=this.docker.getContainer()
                 //else
                 swap=this.docker.getContainer(ID);
+                console.log("Container succesfuly started")
                 return swap.start()
                 .then(()=>swap);
             })
