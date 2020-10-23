@@ -7,9 +7,9 @@ class PhpProjectCommand extends Command {
     var Dev= new DevEnvDocker('/var/run/docker.sock');
     if(!flags.name) return console.log("Please add the name of the container with -n or --name")
     if(flags.Start){
-      
+      Dev.StartContainer(flags.name)
     }else if(flags.Stop){
-
+      Dev.StopContainers(flags.name)
     }else{
       if(!flags.folder) return console.log('Please add the folder where the project lies with -f or --folder')
       Dev.StartPhp(flags.name,flags.folder,flags.port)

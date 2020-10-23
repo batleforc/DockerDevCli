@@ -165,7 +165,7 @@ module.exports=class DevEnvDocker {
     }
     async StartPhp(Name,Folder,Port){
         var projectfolder = Folder.includes('.')!=-1? Folder.replace('.',process.env.PWD):Folder;
-        await this.CreateAndStart("nexiconseils/php:7.4.11.1",Name,{},{},[`${projectfolder}:/app`],Port?Port:80)
+        await this.CreateAndStart("nexiconseils/php:7.4.11.2",Name,{},{},[`${projectfolder}:/app`],Port?Port:80)
     }
     async LinkDns(){
         console.log(`Warning: If you are under wsl env please execute the LinkDns script as admin under cmd or powershell, Your Os is recognise as ${process.platform}.`);
