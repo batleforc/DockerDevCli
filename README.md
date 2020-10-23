@@ -19,7 +19,7 @@ $ npm install -g @nexiconseils/dockerdevcli
 $ dockerdevcli COMMAND
 running command...
 $ dockerdevcli (-v|--version|version)
-@nexiconseils/dockerdevcli/0.1.0 linux-x64 node-v10.19.0
+@nexiconseils/dockerdevcli/0.1.2 linux-x64 node-v10.19.0
 $ dockerdevcli --help [COMMAND]
 USAGE
   $ dockerdevcli COMMAND
@@ -52,7 +52,7 @@ DESCRIPTION
   Extra documentation goes here
 ```
 
-_See code: [src/commands/Container.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.0/src/commands/Container.js)_
+_See code: [src/commands/Container.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.2/src/commands/Container.js)_
 
 ## `dockerdevcli Init`
 
@@ -63,14 +63,17 @@ USAGE
   $ dockerdevcli Init
 
 OPTIONS
-  -d, --Stop   Stop Portainer
-  -u, --Start  Start Portainer
+  -R, --Remove  Remove Container
+  -d, --Stop    Stop Portainer
+  -u, --Start   Start Portainer
 
 DESCRIPTION
   ...
+  The init command add an entry to your hosts file and start a Reverse proxy who automaticaly update direct 
+  {ContainerName}.localhost to the choosen container
 ```
 
-_See code: [src/commands/Init.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.0/src/commands/Init.js)_
+_See code: [src/commands/Init.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.2/src/commands/Init.js)_
 
 ## `dockerdevcli PhpProject`
 
@@ -81,36 +84,39 @@ USAGE
   $ dockerdevcli PhpProject
 
 OPTIONS
-  -d, --Stop           Stop Portainer
+  -R, --Remove         Remove Container
+  -d, --Stop           Stop Container
   -f, --folder=folder  Folder who contains the project
   -n, --name=name      name to print
   -p, --port=port      Port of the project, by default 80
-  -u, --Start          Start Portainer
+  -u, --Start          Start Container
 
 DESCRIPTION
   ...
   The home made php container contains Composer and the Wp-Cli and is based on a PHP 7.4.11 and apache 2 image
 ```
 
-_See code: [src/commands/PhpProject.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.0/src/commands/PhpProject.js)_
+_See code: [src/commands/PhpProject.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.2/src/commands/PhpProject.js)_
 
 ## `dockerdevcli Portainer`
 
-Start Portainer container
+Start Portainer container /! User sudo
 
 ```
 USAGE
   $ dockerdevcli Portainer
 
 OPTIONS
-  -d, --Stop   Stop Portainer
-  -u, --Start  Start Portainer
+  -R, --Remove  Remove Container
+  -d, --Stop    Stop Portainer
+  -u, --Start   Start Portainer
 
 DESCRIPTION
   ...
+  Portainer is a tool that allow the user to control the docker env
 ```
 
-_See code: [src/commands/Portainer.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.0/src/commands/Portainer.js)_
+_See code: [src/commands/Portainer.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.2/src/commands/Portainer.js)_
 
 ## `dockerdevcli createandstart`
 
@@ -131,17 +137,18 @@ DESCRIPTION
   Create a container with the choosen image,name, port and working folder (Remember to pass the fullpath to the folder)
 ```
 
-_See code: [src/commands/createandstart.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.0/src/commands/createandstart.js)_
+_See code: [src/commands/createandstart.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.2/src/commands/createandstart.js)_
 
 ## `dockerdevcli glabrunner`
 
-Describe the command here
+Command in developement
 
 ```
 USAGE
   $ dockerdevcli glabrunner
 
 OPTIONS
+  -R, --Remove                       Remove Container
   -c, --ContainerName=ContainerName  name of the GitlabRunner
   -d, --Stop                         Stop glabrunner
   -f, --Folder=Folder                Folder to bind (Please remember to pass the fullpath)
@@ -153,7 +160,7 @@ DESCRIPTION
   Extra documentation goes here
 ```
 
-_See code: [src/commands/glabrunner.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.0/src/commands/glabrunner.js)_
+_See code: [src/commands/glabrunner.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.2/src/commands/glabrunner.js)_
 
 ## `dockerdevcli help [COMMAND]`
 

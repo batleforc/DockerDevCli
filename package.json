@@ -1,7 +1,7 @@
 {
   "name": "@nexiconseils/dockerdevcli",
   "description": "CLI for Docker dev env",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "author": "Maxime@batleforc",
   "bin": {
     "dockerdevcli": "./bin/run"

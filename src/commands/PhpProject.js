@@ -10,6 +10,8 @@ class PhpProjectCommand extends Command {
       Dev.StartContainer(flags.name)
     }else if(flags.Stop){
       Dev.StopContainers(flags.name)
+    }else if(flags.Remove){
+      Dev.RemoveContainer(flags.name)
     }else{
       if(!flags.folder) return console.log('Please add the folder where the project lies with -f or --folder')
       Dev.StartPhp(flags.name,flags.folder,flags.port)
@@ -26,8 +28,9 @@ PhpProjectCommand.flags = {
   name: flags.string({char: 'n', description: 'name to print'}),
   port :  flags.string({char:'p', description:'Port of the project, by default 80'}),
   folder: flags.string({char:'f',description:'Folder who contains the project'}),
-  Start : flags.boolean({char:'u',description:'Start Portainer'}),
-  Stop : flags.boolean({char:'d',description:'Stop Portainer'}),
+  Start : flags.boolean({char:'u',description:'Start Container'}),
+  Stop : flags.boolean({char:'d',description:'Stop Container'}),
+  Remove: flags.boolean({char:'R',description:'Remove Container'})
 }
 
 module.exports = PhpProjectCommand

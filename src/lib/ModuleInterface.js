@@ -253,19 +253,15 @@ module.exports=class DevEnvDocker {
             })
     }
     RemoveContainer(Name){
-        return this.StopContainers(Name)
-            .then(async(ID)=>{
-                if(ID==-1)return;
-                var swap
-                if(ID==undefined){
-                    swap = await this.docker.getContainer(Name);
-                }
-                else{
-                    swap=this.docker.getContainer(ID)
-                }
-                swap.remove()
-                return swap
-            })
+        return this.GetContainerID(Name).then((id)=>{
+            if(id==-1) return console.log("The container doesn't exist")
+            return this.docker.getContainer(id).remove().catch(()=>{
+                return this.docker.getContainer(id).stop().then(()=>{
+                    return this.docker.getContainer(id).remove()
+                })
+                
+            }).then(()=>console.log(`Container ${Name} succesfuly deleted`))
+        })
     }
     GetContainer(Name){
         return this.GetContainerID(Name)
@@ -277,6 +273,10 @@ module.exports=class DevEnvDocker {
     }
     Container(Name){
         const shell = spawn(`docker`,['exec','-it',Name,'bash'] ,{stdio:'inherit'})
+        shell.on('close',(code)=>{console.log(`[${Name} Shell] terminated :${code}`)})
+    }
+    InteractiveCommand(Name,command){
+        const shell = spawn(`docker`,['exec','-it',Name,'command'] ,{stdio:'inherit'})
         shell.on('close',(code)=>{console.log(`[${Name} Shell] terminated :${code}`)})
     }
     async RemovePortainer(){await this.RemoveContainer(this.PortainerName)}
