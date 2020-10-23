@@ -20,17 +20,9 @@ module.exports=class DevEnvDocker {
         })
         DevEnvDocker.init()
     }
-    static init(){console.log(`
-    /$$$$$$$                      /$$                           /$$$$$$$                      
-   | $$__  $$                    | $$                          | $$__  $$                     
-   | $$  \ $$  /$$$$$$   /$$$$$$$| $$   /$$  /$$$$$$   /$$$$$$ | $$  \ $$  /$$$$$$  /$$    /$$
-   | $$  | $$ /$$__  $$ /$$_____/| $$  /$$/ /$$__  $$ /$$__  $$| $$  | $$ /$$__  $$|  $$  /$$/
-   | $$  | $$| $$  \ $$| $$      | $$$$$$/ | $$$$$$$$| $$  \__/| $$  | $$| $$$$$$$$ \  $$/$$/ 
-   | $$  | $$| $$  | $$| $$      | $$_  $$ | $$_____/| $$      | $$  | $$| $$_____/  \  $$$/  
-   | $$$$$$$/|  $$$$$$/|  $$$$$$$| $$ \  $$|  $$$$$$$| $$      | $$$$$$$/|  $$$$$$$   \  $/   
-   |_______/  \______/  \_______/|__/  \__/ \_______/|__/      |_______/  \_______/    \_/   
-   `)}
+    static init(){console.log(`~~DockerDev~~`)}
     pull(ImageName,tag='latest'){
+        console.log('Please wait image is loading')
         var image
         if(ImageName.includes(':')!=-1) image =ImageName
         else image = `${ImageName}:${tag}`
@@ -278,6 +270,19 @@ module.exports=class DevEnvDocker {
     InteractiveCommand(Name,command){
         const shell = spawn(`docker`,['exec','-it',Name,'command'] ,{stdio:'inherit'})
         shell.on('close',(code)=>{console.log(`[${Name} Shell] terminated :${code}`)})
+    }
+    async GulpShell(tag,folder){
+        if(tag=="Latest"||!await this.ImageExist('node'+tag)) await this.pull('node',tag);
+        var projectfolder = folder.includes('.')!=-1? folder.replace('.',process.env.PWD).trim():folder.trim();
+        console.log('Your file is mounter in the /app directory please use cd /app to be able to use your file')
+        const shell = spawn('docker',['run','-it','--rm','-v',`${projectfolder}:/app`,`node:${tag}`,'bash'],{stdio:'inherit'})
+        shell.on('close',(code)=>{console.log(`[Shell] terminated :${code}`)})
+    }
+    async GulpCommand(tag,folder,command){
+        if(tag=="Latest"||!await this.ImageExist('node'+tag)) await this.pull('node',tag);
+        var projectfolder = folder.includes('.')!=-1? folder.replace('.',process.env.PWD).trim():folder.trim();
+        const shell = spawn('docker',['run','-it','--rm','-v',`${projectfolder}:/app`,`node:${tag}`,'bash','-c',`cd //app && ${command}`],{stdio:'inherit'})
+        shell.on('close',(code)=>{console.log(`Gulp command ${command} terminated :${code}`)})
     }
     async RemovePortainer(){await this.RemoveContainer(this.PortainerName)}
     async RemoveTraefik(){await this.RemoveContainer(this.Traefikname)}

@@ -34,6 +34,7 @@ USAGE
 * [`dockerdevcli Portainer`](#dockerdevcli-portainer)
 * [`dockerdevcli createandstart`](#dockerdevcli-createandstart)
 * [`dockerdevcli glabrunner`](#dockerdevcli-glabrunner)
+* [`dockerdevcli gulp`](#dockerdevcli-gulp)
 * [`dockerdevcli help [COMMAND]`](#dockerdevcli-help-command)
 
 ## `dockerdevcli Container`
@@ -161,6 +162,24 @@ DESCRIPTION
 ```
 
 _See code: [src/commands/glabrunner.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.2/src/commands/glabrunner.js)_
+
+## `dockerdevcli gulp`
+
+Describe the command here
+
+```
+USAGE
+  $ dockerdevcli gulp
+
+OPTIONS
+  -n, --name=name  name to print
+
+DESCRIPTION
+  ...
+  Extra documentation goes here
+```
+
+_See code: [src/commands/gulp.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.2/src/commands/gulp.js)_
 
 ## `dockerdevcli help [COMMAND]`
 
