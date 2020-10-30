@@ -68,13 +68,15 @@ module.exports=class DevEnvDocker {
                 }
             },
             Labels:{
-                [`traefik.http.services.${ContainerName}.loadbalancer.server.port`]: Port.toString()
+                [`traefik.http.services.${ContainerName}.loadbalancer.server.port`]: Port.toString(),
+                ["traefik.frontend.rule"]:`HostRegexp:{subhost:[a-zA-Z0-9-]+}.${ContainerName}.${this.DnsSuffix}`
             }
         }).catch((err)=>{
             console.log("Error during the creation of the container")
             console.log("Error : "+err)
         })
         .then((container)=>{
+            console.log("PLOP")
             console.log(`Starting Container ${ContainerName}`)
             container.start();
         }).catch((err)=>console.log("Error during the start of the container \nError:"+err))
@@ -187,16 +189,21 @@ module.exports=class DevEnvDocker {
     async ifexistputin(path){
         fs.readFile(path,(err,data)=>{
             if(err) console.log(`Can't access the file ${path}`);
-            var dnsredirect='127.0.0.1 *.localhost'
-            if(data.indexOf(dnsredirect)==-1){
-                fs.appendFile(path,dnsredirect,err2=>{
-                    this.AfterInput(err2)
-                })
-            }
-            else{
-                this.AfterInput(err)
-            }
+            var dnsredirect='127.0.0.1 *.localhost\n'
+            var dnsredirect2='127.0.0.1 *.*.localhost\n'
+            var dnsredirect3='127.0.0.1 www.*.*.localhost\n'
+            var dnsredirect4='127.0.0.1 www.*.localhost\n'
+            this.input(dnsredirect)
+            this.input(dnsredirect2)
+            this.input(dnsredirect3)
+            this.input(dnsredirect4)
+            this.AfterInput()
         })
+    }
+    async input(path,string,data){
+        if(data.indexOf(string)==-1){
+            fs.appendFile(path,strin)
+        }
     }
     AfterInput(error){
         if(error){
@@ -278,8 +285,13 @@ module.exports=class DevEnvDocker {
         const shell = spawn('docker',['run','-it','--rm','-v',`${projectfolder}:/app`,`node:${tag}`,'bash'],{stdio:'inherit'})
         shell.on('close',(code)=>{console.log(`[Shell] terminated :${code}`)})
     }
-    async GulpCommand(tag,folder,command){
+    async GulpCommand(tag,folder,command,ignorechecknodemodules=false){
         if(tag=="Latest"||!await this.ImageExist('node'+tag)) await this.pull('node',tag);
+        if (!ignorechecknodemodules&&!fs.existsSync(folder+'/node_modules')) {
+            console.log("Project not installed, install in progress")
+            await this.GulpCommand(tag,folder,'npm install',true)
+            console.log("Project installed")
+        }
         var projectfolder = folder.includes('.')!=-1? folder.replace('.',process.env.PWD).trim():folder.trim();
         const shell = spawn('docker',['run','-it','--rm','-v',`${projectfolder}:/app`,`node:${tag}`,'bash','-c',`cd //app && ${command}`],{stdio:'inherit'})
         shell.on('close',(code)=>{console.log(`Gulp command ${command} terminated :${code}`)})

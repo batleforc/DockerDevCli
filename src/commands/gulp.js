@@ -25,7 +25,7 @@ This command start a one time use docker and erase it after use, this container 
 
 GulpCommand.flags = {
   Folder: flags.string({char: 'f', description: 'Folder in which the cli execute the command'}),
-  Command: flags.string({char:'c',description:'Gulp command to execute'}),
+  Command: flags.string({char:'c',description:'Node command to execute between "'}),
   Old:flags.boolean({char:'O',description:'If the command has to be executed with the old gulp'}),
   Shell: flags.boolean({char:'s',description:'Start an interactive shell'})
 }
