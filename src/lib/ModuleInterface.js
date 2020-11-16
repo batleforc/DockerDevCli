@@ -182,7 +182,7 @@ module.exports=class DevEnvDocker {
         const value = await this.docker.listImages()
         var exist=false;
         value.forEach(element => {
-            if (typeof element.RepoTags[0]!==undefined&& String(element.RepoTags[0]).includes(name))
+            if (typeof element.RepoTags!==undefined&&typeof element.RepoTags[0]!==undefined&& String(element.RepoTags[0]).includes(name))
                 exist = true;
         },this);
         return exist
