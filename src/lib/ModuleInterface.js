@@ -20,7 +20,7 @@ module.exports=class DevEnvDocker {
         })
         DevEnvDocker.init()
     }
-    static init(){console.log(`~~DockerDev~~`)}
+    static init(){console.log(`~~DockerDev~~`);console.log("/!\\Warning if you face an error containing an EACCES connect please launch the command again with Sudo right")}
     pull(ImageName,tag='latest'){
         console.log('Please wait image is loading')
         var image
@@ -69,7 +69,7 @@ module.exports=class DevEnvDocker {
             },
             Labels:{
                 [`traefik.http.services.${ContainerName}.loadbalancer.server.port`]: Port.toString(),
-                ["traefik.frontend.rule"]:`HostRegexp:{subdomain:[a-zA-Z0-9-]+}.${ContainerName}.${this.DnsSuffix}`
+                [`traefik.http.routers.${ContainerName}.rule`]:`HostRegexp(\`${ContainerName}.${this.DnsSuffix}\`,\`{subdomain:[a-zA-Z0-9-]+}.${ContainerName}.${this.DnsSuffix}\`)`
             }
         }).catch((err)=>{
             console.log("Error during the creation of the container")
@@ -158,8 +158,10 @@ module.exports=class DevEnvDocker {
         .then(()=>console.log(`Portainer is ready to rock \nPlease go to http://localhost:9000 or http://portainer.localhost if traefik is correctly configured\nPlease note that if it's the first time you may need to configure the container`))
     }
     async StartPhp(Name,Folder,Port){
-        var projectfolder = Folder.includes('.')!=-1? Folder.replace('.',process.env.PWD):Folder;
-        await this.CreateAndStart("nexiconseils/php:Latest",Name,{},{},[`${projectfolder}:/app`],Port?Port:80)
+        exec("pwd",async (err,stdout)=>{
+            var projectfolder = Folder.includes('.')!=-1? process.env.PWD?Folder.replace('.',process.env.PWD.trim()):Folder.replace('.',stdout.trim()):Folder;
+            await this.CreateAndStart("nexiconseils/php:Latest",Name,{},{},[`${projectfolder}:/app`],Port?Port:80)
+        })
     }
     async LinkDns(){
         console.log(`Warning: If you are under wsl env please execute the LinkDns script as admin under cmd or powershell, Your Os is recognise as ${process.platform}.`);
@@ -180,7 +182,7 @@ module.exports=class DevEnvDocker {
         const value = await this.docker.listImages()
         var exist=false;
         value.forEach(element => {
-            if (String(element.RepoTags[0]).includes(name))
+            if (typeof element.RepoTags[0]!==undefined&& String(element.RepoTags[0]).includes(name))
                 exist = true;
         },this);
         return exist
@@ -202,7 +204,7 @@ module.exports=class DevEnvDocker {
     }
     async input(path,string,data){
         if(data.indexOf(string)==-1){
-            fs.appendFile(path,strin)
+            fs.appendFile(path,string,(err)=>{if(err) console.log(err)})
         }
     }
     AfterInput(error){
