@@ -69,7 +69,7 @@ module.exports=class DevEnvDocker {
             },
             Labels:{
                 [`traefik.http.services.${ContainerName}.loadbalancer.server.port`]: Port.toString(),
-                ["traefik.frontend.rule"]:`HostRegexp:{subhost:[a-zA-Z0-9-]+}.${ContainerName}.${this.DnsSuffix}`
+                ["traefik.frontend.rule"]:`HostRegexp:{subdomain:[a-zA-Z0-9-]+}.${ContainerName}.${this.DnsSuffix}`
             }
         }).catch((err)=>{
             console.log("Error during the creation of the container")
@@ -193,10 +193,10 @@ module.exports=class DevEnvDocker {
             var dnsredirect2='127.0.0.1 *.*.localhost\n'
             var dnsredirect3='127.0.0.1 www.*.*.localhost\n'
             var dnsredirect4='127.0.0.1 www.*.localhost\n'
-            this.input(dnsredirect)
-            this.input(dnsredirect2)
-            this.input(dnsredirect3)
-            this.input(dnsredirect4)
+            this.input(path,dnsredirect,data)
+            this.input(path,dnsredirect2,data)
+            this.input(path,dnsredirect3,data)
+            this.input(path,dnsredirect4,data)
             this.AfterInput()
         })
     }
