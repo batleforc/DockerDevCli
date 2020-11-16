@@ -19,7 +19,7 @@ $ npm install -g @nexiconseils/dockerdevcli
 $ dockerdevcli COMMAND
 running command...
 $ dockerdevcli (-v|--version|version)
-@nexiconseils/dockerdevcli/0.1.6 linux-x64 node-v14.15.0
+@nexiconseils/dockerdevcli/0.1.7 linux-x64 node-v14.15.0
 $ dockerdevcli --help [COMMAND]
 USAGE
   $ dockerdevcli COMMAND
@@ -53,7 +53,7 @@ DESCRIPTION
   Extra documentation goes here
 ```
 
-_See code: [src/commands/Container.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.6/src/commands/Container.js)_
+_See code: [src/commands/Container.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.7/src/commands/Container.js)_
 
 ## `dockerdevcli Init`
 
@@ -74,7 +74,7 @@ DESCRIPTION
   {ContainerName}.localhost to the choosen container
 ```
 
-_See code: [src/commands/Init.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.6/src/commands/Init.js)_
+_See code: [src/commands/Init.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.7/src/commands/Init.js)_
 
 ## `dockerdevcli PhpProject`
 
@@ -97,7 +97,7 @@ DESCRIPTION
   The home made php container contains Composer and the Wp-Cli and is based on a PHP 7.4.11 and apache 2 image
 ```
 
-_See code: [src/commands/PhpProject.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.6/src/commands/PhpProject.js)_
+_See code: [src/commands/PhpProject.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.7/src/commands/PhpProject.js)_
 
 ## `dockerdevcli Portainer`
 
@@ -117,7 +117,7 @@ DESCRIPTION
   Portainer is a tool that allow the user to control the docker env
 ```
 
-_See code: [src/commands/Portainer.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.6/src/commands/Portainer.js)_
+_See code: [src/commands/Portainer.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.7/src/commands/Portainer.js)_
 
 ## `dockerdevcli createandstart`
 
@@ -138,7 +138,7 @@ DESCRIPTION
   Create a container with the choosen image,name, port and working folder (Remember to pass the fullpath to the folder)
 ```
 
-_See code: [src/commands/createandstart.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.6/src/commands/createandstart.js)_
+_See code: [src/commands/createandstart.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.7/src/commands/createandstart.js)_
 
 ## `dockerdevcli glabrunner`
 
@@ -161,7 +161,7 @@ DESCRIPTION
   Extra documentation goes here
 ```
 
-_See code: [src/commands/glabrunner.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.6/src/commands/glabrunner.js)_
+_See code: [src/commands/glabrunner.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.7/src/commands/glabrunner.js)_
 
 ## `dockerdevcli gulp`
 
@@ -183,7 +183,7 @@ DESCRIPTION
   command
 ```
 
-_See code: [src/commands/gulp.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.6/src/commands/gulp.js)_
+_See code: [src/commands/gulp.js](https://github.com/batleforc/dockerdevcli/blob/v0.1.7/src/commands/gulp.js)_
 
 ## `dockerdevcli help [COMMAND]`
 

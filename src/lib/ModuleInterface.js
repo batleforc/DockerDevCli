@@ -178,12 +178,23 @@ module.exports=class DevEnvDocker {
             console.log("Your opperating system isn't supported yet")
         }
     }
+    async GetCurrentDirectory(Folder,callback){
+        exec("pwd",async (err,stdout)=>{
+            var projectfolder = Folder.includes('.')!=-1? process.env.PWD?Folder.replace('.',process.env.PWD.trim()):Folder.replace('.',stdout.trim()):Folder;
+            callback(projectfolder)
+        })
+    }
     async ImageExist(name){
         const value = await this.docker.listImages()
         var exist=false;
         value.forEach(element => {
-            if (typeof element.RepoTags!==undefined&&typeof element.RepoTags[0]!==undefined&& String(element.RepoTags[0]).includes(name))
+            try{
+                console.log(element)
+                if (element.RepoTags!==undefined&&typeof element.RepoTags[0]!==undefined&& String(element.RepoTags[0]).includes(name))
                 exist = true;
+            }catch(ex){
+                return
+            }
         },this);
         return exist
         
@@ -282,10 +293,11 @@ module.exports=class DevEnvDocker {
     }
     async GulpShell(tag,folder){
         if(tag=="Latest"||!await this.ImageExist('node'+tag)) await this.pull('node',tag);
-        var projectfolder = folder.includes('.')!=-1? folder.replace('.',process.env.PWD).trim():folder.trim();
-        console.log('Your file is mounter in the /app directory please use cd /app to be able to use your file')
-        const shell = spawn('docker',['run','-it','--rm','-v',`${projectfolder}:/app`,`node:${tag}`,'bash'],{stdio:'inherit'})
-        shell.on('close',(code)=>{console.log(`[Shell] terminated :${code}`)})
+        this.GetCurrentDirectory(folder,(projectfolder)=>{
+            console.log('Your file is mounted in the /app directory please use cd /app to be able to use your file')
+            const shell = spawn('docker',['run','-it','--rm','-v',`${projectfolder}:/app`,`node:${tag}`,'bash'],{stdio:'inherit'})
+            shell.on('close',(code)=>{console.log(`[Shell] terminated :${code}`)})
+        })
     }
     async GulpCommand(tag,folder,command,ignorechecknodemodules=false){
         if(tag=="Latest"||!await this.ImageExist('node'+tag)) await this.pull('node',tag);
@@ -294,9 +306,10 @@ module.exports=class DevEnvDocker {
             await this.GulpCommand(tag,folder,'npm install',true)
             console.log("Project installed")
         }
-        var projectfolder = folder.includes('.')!=-1? folder.replace('.',process.env.PWD).trim():folder.trim();
-        const shell = spawn('docker',['run','-it','--rm','-v',`${projectfolder}:/app`,`node:${tag}`,'bash','-c',`cd //app && ${command}`],{stdio:'inherit'})
-        shell.on('close',(code)=>{console.log(`Gulp command ${command} terminated :${code}`)})
+        this.GetCurrentDirectory(folder,(projectfolder)=>{
+            const shell = spawn('docker',['run','-it','--rm','-v',`${projectfolder}:/app`,`node:${tag}`,'bash','-c',`cd //app && ${command}`],{stdio:'inherit'})
+            shell.on('close',(code)=>{console.log(`Gulp command ${command} terminated :${code}`)})
+        })
     }
     async RemovePortainer(){await this.RemoveContainer(this.PortainerName)}
     async RemoveTraefik(){await this.RemoveContainer(this.Traefikname)}
